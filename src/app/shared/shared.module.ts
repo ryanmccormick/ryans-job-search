@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IndeedService } from './indeed.service';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [],
-  providers: [
-    IndeedService
-  ]
+  declarations: []
 })
-export class CoreModule { }
+export class SharedModule { }
