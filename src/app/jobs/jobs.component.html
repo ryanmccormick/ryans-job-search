@@ -21,7 +21,7 @@
       </div>
 
         <!-- No Results Block -->
-        <div class="list-group" *ngIf="searchResults && !searchResults.results.length > 0">
+        <div class="list-group" *ngIf="searchResults && !searchResults.results.length">
           <div class="list-group-item">
             <h2>No Results</h2>
           </div>
@@ -29,7 +29,7 @@
         <!-- end No Results Block -->
 
         <!-- start Results Block -->
-        <div class="list-group" *ngIf="searchResults && searchResults.results.length > 0">
+        <div class="list-group" *ngIf="searchResults && searchResults.results.length">
           <a class="list-group-item" [href]="job.url" *ngFor="let job of searchResults.results; let i = index" target="_blank">
             <h4 class="list-group-item-heading">{{ job.jobtitle }}</h4>
             <p class="list-group-item-text">
