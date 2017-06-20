@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+var pvb = (function() {
+  'use strict';
+
+  var fs = require('fs');
+  var original = '';
+  var packData = {};
+  var fileNameRef = '';
+
+
+  var service = {
+    init: init
+  };
+
+  return service;
+  /////////////////
+
+  function init(filePath) {
+    if (!filePath) { throw new Error('You must enter a valid package.json file path!'); }
+    fileNameRef = filePath;
+    fs.readFile(filePath, 'UTF8', readPackage);
+  }
+
+  function readPackage(err, data) {
+    if (err) throw err;
+
+    packData = JSON.parse(data);
+    original = packData.version;
+    generateNewPatch(packData.version);
+  }
+
+  function generateNewPatch(version) {
+    var versionArr = version.split('.');
+    var lastNumRef = versionArr.length - 1;
+    var lastNum = parseInt(versionArr[lastNumRef], 10);
+
+    versionArr[lastNumRef] = (lastNum += 1).toString();
+    packData.version = versionArr.join('.');
+    writeUpdate();
+  }
+
+  function writeUpdate() {
+    fs.writeFile(fileNameRef, JSON.stringify(packData, null, '  '), function(err) {
+      if (err) throw err;
+
+      var message = [
+        'Patch version has been updated from',
+        original,
+        'to',
+        packData.version
+      ];
+
+      console.log(message.join(' '));
+    });
+  }
+
+})();
+
+pvb.init('./package.json');
