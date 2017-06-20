@@ -32,8 +32,8 @@ var proxySettings = {
       }
 
       return path;
-    }
-
+    },
+    changeOrigin: true
   }
 };
 
