@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row margin-t-20">
   <div class="col-sm-4 col-xs-12">
     You searched for:
     <p>
@@ -7,5 +7,40 @@
 
   </div>
 
-  <div class="col-sm-8 col-xs-12">Job Results</div>
+  <div class="col-sm-8 col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+         <span id=indeed_at><a href="http://www.indeed.com/">jobs</a> by <a
+           href="http://www.indeed.com/" title="Job Search"><img
+           src="https://www.indeed.com/p/jobsearch.gif" style="border: 0;
+            vertical-align: middle;" alt="Indeed job search"></a></span>
+
+
+        <h3 class="panel-title">Search Results</h3>
+      </div>
+
+        <!-- No Results Block -->
+        <div class="list-group" *ngIf="searchResults && !searchResults.results.length > 0">
+          <div class="list-group-item">
+            <h2>No Results</h2>
+          </div>
+        </div>
+        <!-- end No Results Block -->
+
+        <!-- start Results Block -->
+        <div class="list-group" *ngIf="searchResults && searchResults.results.length > 0">
+          <a class="list-group-item" [href]="job.url" *ngFor="let job of searchResults.results; let i = index" target="_blank">
+            <h4 class="list-group-item-heading">{{ job.jobtitle }}</h4>
+            <p class="list-group-item-text">
+              {{ job.company }}<br>
+              {{ job.snippet }}
+            </p>
+            <em>{{ job.formattedLocation }} - {{ job.formattedRelativeTime }}</em>
+          </a>
+        </div>
+        <!-- end Results Block -->
+
+    </div>
+  </div>
 </div>

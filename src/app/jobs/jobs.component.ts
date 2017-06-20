@@ -14,6 +14,7 @@ export class JobsComponent implements OnInit {
 
   searchQuery: SearchQuery;
   searchResults: SearchResults;
+  isLoading = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -36,11 +37,12 @@ export class JobsComponent implements OnInit {
   }
 
   setSearchData(searchQuery: SearchQuery): void {
+    this.isLoading = true;
     this.indeedService.getJobByLocation(searchQuery)
       .subscribe(
         results => this.searchResults = results,
         error => console.log('something went wrong'),
-        () => console.log(JSON.stringify(this.searchResults))
+        () => { this.isLoading = false; }
       );
   }
 
