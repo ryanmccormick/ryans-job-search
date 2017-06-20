@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchQuery } from '../shared/models/search-query.model';
 
-import 'rxjs/add/operator/map';
+import { IndeedService } from '../core/indeed.service';
+import { SearchResults } from '../shared/models/search-results.model';
 
 @Component({
   selector: 'app-jobs',
@@ -12,9 +13,12 @@ import 'rxjs/add/operator/map';
 export class JobsComponent implements OnInit {
 
   searchQuery: SearchQuery;
+  searchResults: SearchResults;
+  isLoading = false;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private indeedService: IndeedService) { }
 
   ngOnInit() {
     this.urlParamSubscription();
@@ -32,9 +36,14 @@ export class JobsComponent implements OnInit {
     this.searchQuery.jobTitle = params['q'];
   }
 
-  setSearchData(searchQuery: SearchQuery) {
-    console.log(JSON.stringify(searchQuery));
-    // Call Data Service From Here
+  setSearchData(searchQuery: SearchQuery): void {
+    this.isLoading = true;
+    this.indeedService.getJobByLocation(searchQuery)
+      .subscribe(
+        results => this.searchResults = results,
+        error => console.log('something went wrong'),
+        () => { this.isLoading = false; }
+      );
   }
 
 
