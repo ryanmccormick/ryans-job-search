@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { JobsComponent } from './jobs.component';
+import { IndeedService } from '../core/indeed.service';
+import { MockIndeedService } from '../../../spec/services/indeed.service';
 
 describe('JobsComponent', () => {
   let component: JobsComponent;
@@ -10,7 +12,8 @@ describe('JobsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule ],
-      declarations: [ JobsComponent ]
+      declarations: [ JobsComponent ],
+      providers: [{ provide: IndeedService, useClass: MockIndeedService  }]
     })
     .compileComponents();
   }));
