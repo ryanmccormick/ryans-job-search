@@ -2,17 +2,17 @@
 
 var server = require('./../../server');
 var splash = require('./../lib/server_banner')();
-var ipaddress = "127.0.0.1";
-var port = 5000;
+server.set('port', (process.env.PORT || 5000));
+
 var node_env = process.env.NODE_ENV || 'local';
 
-server.listen(port, ipaddress, function() {
+server.listen(server.get('port'), function() {
 	clear();
 	var splashScreen = [
         splash,
         '\n+------------------------------------',
         '| Environment: ' + node_env,
-        '| Listening on port: ' + port,
+        '| Listening on port: ' + server.get('port'),
         '+------------------------------------'
     ];
     console.log(splashScreen.join('\n'));
